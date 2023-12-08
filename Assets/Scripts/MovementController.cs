@@ -6,7 +6,7 @@ public class MovementController : MonoBehaviour
 {
     public Rigidbody2D playerRB { get; private set; }
     private Vector2 direction = Vector2.up;
-    public float speed = 5f;
+    public float speed = 2000f; //5f;
     public KeyCode inputUp = KeyCode.W;
     public KeyCode inputDown = KeyCode.S;
     public KeyCode inputRight = KeyCode.D;
@@ -14,6 +14,11 @@ public class MovementController : MonoBehaviour
     public bool hasReachedGoal = false;
     public GameObject goalObject;
 
+    // Hand pose controllers:
+    private bool isHandUp = false;
+    private bool isHandDown = false;
+    private bool isHandRight = false;
+    private bool isHandLeft = false;
     void Awake()
     {
         playerRB = GetComponent<Rigidbody2D>();
@@ -21,6 +26,7 @@ public class MovementController : MonoBehaviour
 
     void Start()
     {
+        setDirection(Vector2.zero);
     }
 
     // Update is called once per frame
@@ -46,7 +52,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                setDirection(Vector2.zero);
+                //setDirection(Vector2.zero);
             }
         }
 
@@ -60,7 +66,7 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    private void setDirection(Vector2 newDirection)
+    public void setDirection(Vector2 newDirection)
     {
         direction = newDirection;
     }
@@ -71,6 +77,31 @@ public class MovementController : MonoBehaviour
         Vector2 translation = direction * speed * Time.fixedDeltaTime;
         playerRB.MovePosition(position + translation);
         //playerRB.velocity = direction * speed;
+    }
+
+    public void poseUP()
+    {
+        isHandUp = true;
+        Debug.Log("Hands UP!");
+        setDirection(Vector2.up);
+    }
+    public void poseDown()
+    {
+        isHandDown = true;
+        Debug.Log("Hands Down!");
+        setDirection(Vector2.down);
+    }
+    public void poseRight()
+    {
+        isHandRight = true;
+        Debug.Log("Hands UP!");
+        setDirection(Vector2.right);
+    }
+    public void poseLeft()
+    {
+        isHandLeft = true;
+        Debug.Log("Hands Down!");
+        setDirection(Vector2.left);
     }
 }
 
